@@ -74,7 +74,7 @@ if ( $_REQUEST['Origine']=="Ajout")
  	//echo $RequeteSQL;
  	$Result=mysqli_query($db,$RequeteSQL);
 	 if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	mysqli_free_result($Result);
+		//else {mysqli_free_result($Result);}
 	echo "gestion 1"; 
 
 // 2) Recup id_film
@@ -82,9 +82,12 @@ if ( $_REQUEST['Origine']=="Ajout")
 	//echo $RequeteSQL;
 	 $Result=mysqli_query($db,$RequeteSQL);
 	 if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	 $Fiche = mysqli_fetch_assoc($Result);
-	 $id_film=$Fiche['max(id_film)'];
-	 mysqli_free_result($Result);
+	 else
+	{
+		$Fiche = mysqli_fetch_assoc($Result);
+		$id_film=$Fiche['max(id_film)'];
+		mysqli_free_result($Result);
+	}
 	echo "gestion 2";
 	
 // 3) Ajout du ou des genre(s) : tables est_du_genre 
@@ -95,7 +98,7 @@ for ($k = 0; $k < $nb_genre; $k++)
 	$RequeteSQL=  "insert into est_du_genre (id_film, id_genre) values ($id_film, $id_genre);";
 	$Result=mysqli_query($db,$RequeteSQL);
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	mysqli_free_result($Result);
+	//else {mysqli_free_result($Result);}
 }
 	echo "gestion 3";
 
@@ -107,7 +110,7 @@ for ($k = 0; $k < $nb_pays; $k++)
 	$RequeteSQL=  "insert into est_produit_par_un_pays (id_film, id_pays) values ($id_film, $id_pays);";
 	$Result=mysqli_query($db,$RequeteSQL);
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	mysqli_free_result($Result);
+	//else {mysqli_free_result($Result);}
 }
 	echo "gestion 4";
 
@@ -117,10 +120,14 @@ echo "emplacement VHS";
     $RequeteSQL="select count(*) as compte from emplacement where id_videotheque=1 and numero_de_classement=\"$Numero_VHS\" ";
 	$Result=mysqli_query($db,$RequeteSQL);
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }  
-	
-	$Fiche = mysqli_fetch_assoc($Result);
-	mysqli_free_result($Result);
-	$compte=$Fiche['compte'];
+	else 
+	{
+		$Fiche = mysqli_fetch_assoc($Result);
+		mysqli_free_result($Result);	
+		$compte=$Fiche['compte'];	
+	}
+
+
 	// $id_emplacement=$Numero_VHS;
 	$numero_de_classement=$Numero_VHS;
 
@@ -130,18 +137,21 @@ echo "emplacement VHS";
 		$RequeteSQL .= " VALUES ('', \"$Type_VHS\", \"$Numero_VHS\", 1, \"$Proprio_VHS\"  ) ;";
 		$Result=mysqli_query($db,$RequeteSQL);
 		if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-		mysqli_free_result($Result);
+		//else {mysqli_free_result($Result);}
 		$RequeteSQL="select  LAST_INSERT_ID() as last;";
 		$Result=mysqli_query($db,$RequeteSQL);
 		if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-		$Fiche = mysqli_fetch_assoc($Result);
-		mysqli_free_result($Result);
-		$id_emplacement=$Fiche['last'];
+		else
+		{
+			$Fiche = mysqli_fetch_assoc($Result);
+			mysqli_free_result($Result);
+			$id_emplacement=$Fiche['last'];
+		}
 	//}
 	$RequeteSQL="insert into est_enregistre  (id_emplacement, id_film) values ($id_emplacement, $id_film);";
 	$Result=mysqli_query($db,$RequeteSQL);
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	mysqli_free_result($Result);
+	//else {mysqli_free_result($Result);}
 
 }
 if ($DVD == 1) { //creation de emplacement
@@ -150,9 +160,13 @@ echo "emplacement DVD";
     $RequeteSQL="select count(*) as compte from emplacement where id_videotheque=2 and numero_de_classement=\"$Numero_DVD\" ";
 	$Result=mysqli_query($db,$RequeteSQL);
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	 $Fiche = mysqli_fetch_assoc($Result);
-	 mysqli_free_result($Result);
-	 $compte=$Fiche['compte'];
+	else
+	{
+		$Fiche = mysqli_fetch_assoc($Result);
+		mysqli_free_result($Result);
+		$compte=$Fiche['compte'];
+	}
+	
 	 $id_emplacement=$Numero_DVD;
 	 
     // if ($compte==0)  
@@ -161,18 +175,22 @@ echo "emplacement DVD";
 	$RequeteSQL .= " VALUES ('', \"$Type_DVD\", \"$Numero_DVD\", 2, \"$Proprio_DVD\"  ) ;";
 	$Result=mysqli_query($db,$RequeteSQL);
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	mysqli_free_result($Result);
+	//else {mysqli_free_result($Result);}
+	
 	$RequeteSQL="select  LAST_INSERT_ID() as last;";
 	$Result=mysqli_query($db,$RequeteSQL);
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	 $Fiche = mysqli_fetch_assoc($Result);
-	 $id_emplacement=$Fiche['last'];
-	 mysqli_free_result($Result);
+		else
+	{
+		$Fiche = mysqli_fetch_assoc($Result);
+		$id_emplacement=$Fiche['last'];
+		mysqli_free_result($Result);
+	}
 	//}
 	$RequeteSQL="insert into est_enregistre  (id_emplacement, id_film) values ($id_emplacement, $id_film);";
 	$Result=mysqli_query($db,$RequeteSQL);
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	mysqli_free_result($Result);
+	//else {mysqli_free_result($Result);}
 }
 if ($CD == 1) { //creation de emplacement
 echo "emplacement CD";
@@ -180,10 +198,14 @@ echo "emplacement CD";
     $RequeteSQL="select count(*) as compte from emplacement where id_videotheque=3 and numero_de_classement=\"$Numero_CD\" ";
 	$Result=mysqli_query($db,$RequeteSQL);
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	$Fiche = mysqli_fetch_assoc($Result);
-	$compte=$Fiche['compte'];
+		else
+	{
+		$Fiche = mysqli_fetch_assoc($Result);
+		$compte=$Fiche['compte'];
+		mysqli_free_result($Result);
+	}
+	
 	$id_emplacement=$Numero_CD;
-	mysqli_free_result($Result);
 //	 echo "<BR>CD $id_emplacement";
 	 
     // if ($compte==0)  
@@ -192,18 +214,22 @@ echo "emplacement CD";
 	$RequeteSQL .= " VALUES ('', \"$Type_CD\", \"$Numero_CD\", 3, \"$Proprio_CD\"  ) ;";
 	$Result=mysqli_query($db,$RequeteSQL);
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	mysqli_free_result($Result);
+		//else {mysqli_free_result($Result);}
 	$RequeteSQL="select  LAST_INSERT_ID() as last;";
 	$Result=mysqli_query($db,$RequeteSQL);
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	$Fiche = mysqli_fetch_assoc($Result);
-	$id_emplacement=$Fiche['last'];
-	mysqli_free_result($Result);
+	else
+	{
+		$Fiche = mysqli_fetch_assoc($Result);
+		$id_emplacement=$Fiche['last'];
+		mysqli_free_result($Result);
+	}
+
 	//}
 	$RequeteSQL="insert into est_enregistre  (id_emplacement, id_film) values ($id_emplacement, $id_film);";
 	$Result=mysqli_query($db,$RequeteSQL);
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	mysqli_free_result($Result);
+	//else {mysqli_free_result($Result);}
 }
 
 if ($Book == 1) { //creation de emplacement
@@ -212,10 +238,13 @@ echo "emplacement BOOK";
     $RequeteSQL="select count(*) as compte from emplacement where id_videotheque=4 and numero_de_classement=\"$Numero_Book\" ";
 	$Result=mysqli_query($db,$RequeteSQL);
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	$Fiche = mysqli_fetch_assoc($Result);
-	$compte=$Fiche['compte'];
+	else
+	{
+		$Fiche = mysqli_fetch_assoc($Result);
+		$compte=$Fiche['compte'];
+		mysqli_free_result($Result);		
+	}
 	$id_emplacement=$Numero_Book;
-	mysqli_free_result($Result);
 	
 //    if ($compte==0)  
 	//{
@@ -223,19 +252,23 @@ echo "emplacement BOOK";
 		$RequeteSQL .= " VALUES ('', \"$Type_Book\", \"$Numero_Book\", 4, \"$Proprio_Book\"  ) ;";
 		$Result=mysqli_query($db,$RequeteSQL);
 		if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-		mysqli_free_result($Result);
+			//else {mysqli_free_result($Result);}
 		$RequeteSQL="select  LAST_INSERT_ID() as last;";
 		$Result=mysqli_query($db,$RequeteSQL);
 		if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-		$Fiche = mysqli_fetch_assoc($Result);
-		$id_emplacement=$Fiche['last'];
-		mysqli_free_result($Result);
+		else
+		{
+			$Fiche = mysqli_fetch_assoc($Result);
+			$id_emplacement=$Fiche['last'];
+			mysqli_free_result($Result);		
+		}
+
 	//}
 	
 	$RequeteSQL="insert into est_enregistre  (id_emplacement, id_film) values ($id_emplacement, $id_film);";
 	$Result=mysqli_query($db,$RequeteSQL);
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	mysqli_free_result($Result);
+		//else {mysqli_free_result($Result);}
 }
 
 echo "gestion 5";
@@ -266,39 +299,42 @@ if ( $_REQUEST['Origine']=="Suppr")
 	$RequeteSQL="DELETE FROM movie WHERE id_film=$id"; 
 	$Result=mysqli_query($db,$RequeteSQL);      
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	mysqli_free_result($Result);
+	//else {mysqli_free_result($Result);}
 	
    // On efface le genre du film
    
 	$RequeteSQL="DELETE FROM est_du_genre WHERE id_film=$id"; 
 	$Result=mysqli_query($db,$RequeteSQL);      
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	mysqli_free_result($Result);
+	//else {mysqli_free_result($Result);}
 	
     // On efface le pays du film
 	$RequeteSQL="DELETE FROM est_produit_par_un_pays WHERE id_film=$id"; 
 	$Result=mysqli_query($db,$RequeteSQL);      
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	mysqli_free_result($Result);
+	//else {mysqli_free_result($Result);}
 	
 	// recup de l'emplacement
 	$RequeteSQL="select id_emplacement from est_enregistre WHERE id_film=$id";
 	$Result=mysqli_query($db,$RequeteSQL);
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }  
+	else 
+	{
 	$Fiche = mysqli_fetch_assoc($Result);
-	$id_emplacement=$Fiche['id_emplacement'];
+	$id_emplacement=$Fiche['id_emplacement'];	
+	}
 	
 		// On efface l'enregistrement TABLE EST_ENREGISTRE
 		$RequeteSQL="DELETE FROM est_enregistre WHERE id_film=$id"; 
 		$Result=mysqli_query($db,$RequeteSQL);      
 		if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-		mysqli_free_result($Result);
+		//else {mysqli_free_result($Result);}
 
 		// On efface les empalcements TABLE emplacement
 		$RequeteSQL="DELETE FROM emplacement WHERE id_emplacement=$id_emplacement";
 		$Result=mysqli_query($db,$RequeteSQL);
 		if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }  
-		mysqli_free_result($Result);
+		//else {mysqli_free_result($Result);}
 	
 	// On affiche la liste
  
@@ -384,7 +420,7 @@ print_r($_REQUEST);
 	
 	$Result=mysqli_query($db,$RequeteSQL);
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	mysqli_free_result($Result);
+	//else {mysqli_free_result($Result);}
  
   // 2) MODIF du ou des genre(s) : tables est_du_genre 
   
@@ -392,7 +428,7 @@ print_r($_REQUEST);
 	$RequeteSQL="DELETE FROM est_du_genre WHERE id_film=$id_film"; 
 	$Result=mysqli_query($db,$RequeteSQL);      
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	mysqli_free_result($Result);
+	//else {mysqli_free_result($Result);}
 	
 	// on recrée les données
 	for ($k = 0; $k < $nb_genre; $k++)
@@ -401,7 +437,7 @@ print_r($_REQUEST);
 		$RequeteSQL=  "insert into est_du_genre (id_film, id_genre) values ($id_film, $id_genre);";
 		$Result=mysqli_query($db,$RequeteSQL);
 		if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-		mysqli_free_result($Result);
+		//else {mysqli_free_result($Result);}
 	}
 echo "gestion 3";
 
@@ -410,7 +446,7 @@ echo "gestion 3";
 	$RequeteSQL="DELETE FROM est_produit_par_un_pays WHERE id_film=$id"; 
 	$Result=mysqli_query($db,$RequeteSQL);      
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	mysqli_free_result($Result);
+	//else {mysqli_free_result($Result);}
 	
 	// On re crée du ou des pays(s) de production
 	for ($k = 0; $k < $nb_pays; $k++)
@@ -419,7 +455,7 @@ echo "gestion 3";
 		$RequeteSQL=  "insert into est_produit_par_un_pays (id_film, id_pays) values ($id_film, $id_pays);";
 		$Result=mysqli_query($db,$RequeteSQL);
 		if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-		mysqli_free_result($Result);
+		//else {mysqli_free_result($Result);}
 	}
 echo "gestion 4";
 
@@ -429,7 +465,7 @@ echo "gestion 4";
 	$RequeteSQL="DELETE FROM est_enregistre WHERE id_film=$id"; 
 	$Result=mysqli_query($db,$RequeteSQL);      
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	mysqli_free_result($Result);
+	//else {mysqli_free_result($Result);}
 	
 	//On recrée les emplacements
 	if ($VHS == 1) 
@@ -437,10 +473,13 @@ echo "gestion 4";
 		$RequeteSQL="select count(*) as compte from emplacement where id_videotheque=1 and numero_de_classement=\"$Numero_VHS\" ";
 		$Result=mysqli_query($db,$RequeteSQL);
 		if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }  
-	
-		$Fiche = mysqli_fetch_assoc($Result);
-		$compte=$Fiche['compte'];
-		mysqli_free_result($Result);
+		else
+		{
+			$Fiche = mysqli_fetch_assoc($Result);
+			$compte=$Fiche['compte'];
+			mysqli_free_result($Result);			
+		}
+
 //	 $id_emplacement=$Numero_VHS;
 		echo "<b><i>$Numero_VHS + compte=$compte</i></b>";
 		
@@ -450,34 +489,42 @@ echo "gestion 4";
 			$RequeteSQL .= " VALUES ('', \"$Type_VHS\", \"$Numero_VHS\", 1, \"$Proprio_VHS\"  ) ;";
 			$Result=mysqli_query($db,$RequeteSQL);
 			if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-			mysqli_free_result($Result);
+			//else {mysqli_free_result($Result);}
 			
 			$RequeteSQL="select  LAST_INSERT_ID() as last;";
 			$Result=mysqli_query($db,$RequeteSQL);
 			if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-			$Fiche = mysqli_fetch_assoc($Result);
-			$id_emplacement=$Fiche['last'];
-			mysqli_free_result($Result);
+			else 
+			{
+				$Fiche = mysqli_fetch_assoc($Result);
+				$id_emplacement=$Fiche['last'];
+				mysqli_free_result($Result);			
+			}
+
 		}
 		else
 		{
 			$RequeteSQL="select * from emplacement where id_videotheque=1 and numero_de_classement=\"$Numero_VHS\" ";
 			$Result=mysqli_query($db,$RequeteSQL);
 			if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }  
-			$Fiche = mysqli_fetch_assoc($Result);
-			$id_emplacement=$Fiche['id_emplacement'];
-			mysqli_free_result($Result);
+			else 
+			{
+				$Fiche = mysqli_fetch_assoc($Result);
+				$id_emplacement=$Fiche['id_emplacement'];
+				mysqli_free_result($Result);
+			}
+
 			
 			$RequeteSQL="Update emplacement set id_type_support=\"$Type_VHS\", numero_de_classement=\"$Numero_VHS\", id_videotheque=1, proprio_video=\"$Proprio_VHS\" where id_emplacement=$id_emplacement ;";
 			$Result=mysqli_query($db,$RequeteSQL);
 			if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-			mysqli_free_result($Result);
+			//else {mysqli_free_result($Result);}
 		}
 		
 		$RequeteSQL="insert into est_enregistre  (id_emplacement, id_film) values ($id_emplacement, $id_film);";
 		$Result=mysqli_query($db,$RequeteSQL);
 		if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-		mysqli_free_result($Result);
+		//else {mysqli_free_result($Result);}
 
 	}
 	
@@ -486,9 +533,13 @@ echo "gestion 4";
 		$RequeteSQL="select count(*) as compte from emplacement where id_videotheque=2 and numero_de_classement=\"$Numero_DVD\" ";
 		$Result=mysqli_query($db,$RequeteSQL);
 		if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-		$Fiche = mysqli_fetch_assoc($Result);
-		$compte=$Fiche['compte'];
-		mysqli_free_result($Result);
+		else
+		{
+			$Fiche = mysqli_fetch_assoc($Result);
+			$compte=$Fiche['compte'];
+			mysqli_free_result($Result);			
+		}
+
 		//	 $id_emplacement=$Numero_DVD;
 	 
 		if ($compte==0)  
@@ -497,14 +548,18 @@ echo "gestion 4";
 			$RequeteSQL .= " VALUES ('', \"$Type_DVD\", \"$Numero_DVD\", 2, \"$Proprio_DVD\"  ) ;";
 			$Result=mysqli_query($db,$RequeteSQL);
 			if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-			mysqli_free_result($Result);
+			//else {mysqli_free_result($Result);}
 			
 			$RequeteSQL="select  LAST_INSERT_ID() as last;";
 			$Result=mysqli_query($db,$RequeteSQL);
 			if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-			$Fiche = mysqli_fetch_assoc($Result);
-			$id_emplacement=$Fiche['last'];
-			mysqli_free_result($Result);
+			else 
+			{
+				$Fiche = mysqli_fetch_assoc($Result);
+				$id_emplacement=$Fiche['last'];
+				mysqli_free_result($Result);				
+			}
+
 			//	 echo "<BR>DVD $id_emplacement";
 		}
 		else
@@ -512,21 +567,25 @@ echo "gestion 4";
 			$RequeteSQL="select * from emplacement where id_videotheque=2 and numero_de_classement=\"$Numero_DVD\" ";
 			$Result=mysqli_query($db,$RequeteSQL);
 			if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }  
-			$Fiche = mysqli_fetch_assoc($Result);
-			$id_emplacement=$Fiche['id_emplacement'];
-			mysqli_free_result($Result);
+			else
+			{
+				$Fiche = mysqli_fetch_assoc($Result);
+				$id_emplacement=$Fiche['id_emplacement'];
+				mysqli_free_result($Result);				
+			}
+
 			
 			$RequeteSQL="Update emplacement set id_type_support=\"$Type_DVD\", numero_de_classement=\"$Numero_DVD\", id_videotheque=2, proprio_video=\"$Proprio_DVD\" where id_emplacement=$id_emplacement ;";
 			$Result=mysqli_query($db,$RequeteSQL);
 			if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-			mysqli_free_result($Result);
+			//else {mysqli_free_result($Result);}
 		}
 
 
 		$RequeteSQL="insert into est_enregistre  (id_emplacement, id_film) values ($id_emplacement, $id_film);";
 		$Result=mysqli_query($db,$RequeteSQL);
 		if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-		mysqli_free_result($Result);
+		//else {mysqli_free_result($Result);}
 	}
 	
 	if ($CD == 1) 
@@ -534,9 +593,13 @@ echo "gestion 4";
 		$RequeteSQL="select count(*) as compte from emplacement where id_videotheque=3 and numero_de_classement=\"$Numero_CD\" ";
 		$Result=mysqli_query($db,$RequeteSQL);
 		if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-		$Fiche = mysqli_fetch_assoc($Result);
-		$compte=$Fiche['compte'];
-		mysqli_free_result($Result);
+		else
+		{
+			$Fiche = mysqli_fetch_assoc($Result);
+			$compte=$Fiche['compte'];
+			mysqli_free_result($Result);			
+		}
+
 		//	 $id_emplacement=$Numero_CD;
 		//	 echo "<BR>CD $id_emplacement";
 	 
@@ -546,34 +609,42 @@ echo "gestion 4";
 			$RequeteSQL .= " VALUES ('', \"$Type_CD\", \"$Numero_CD\", 3, \"$Proprio_CD\"  ) ;";
 			$Result=mysqli_query($db,$RequeteSQL);
 			if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-			mysqli_free_result($Result);
+			//else {mysqli_free_result($Result);}
 			
 			$RequeteSQL="select  LAST_INSERT_ID() as last;";
 			$Result=mysqli_query($db,$RequeteSQL);
-			if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-			$Fiche = mysqli_fetch_assoc($Result);
-			$id_emplacement=$Fiche['last'];
-			mysqli_free_result($Result);
+			if (!$Result) { die('Invalid query: ' . mysqli_error($db)); } 
+			else
+			{
+				$Fiche = mysqli_fetch_assoc($Result);
+				$id_emplacement=$Fiche['last'];
+				mysqli_free_result($Result);	
+			}
+			
 		}
 		else
 		{
 			$RequeteSQL="select * from emplacement where id_videotheque=3 and numero_de_classement=\"$Numero_CD\" ";
 			$Result=mysqli_query($db,$RequeteSQL);
 			if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }  
-			$Fiche = mysqli_fetch_assoc($Result);
-			$id_emplacement=$Fiche['id_emplacement'];
-			mysqli_free_result($Result);
+			else
+			{
+				$Fiche = mysqli_fetch_assoc($Result);
+				$id_emplacement=$Fiche['id_emplacement'];
+				mysqli_free_result($Result);				
+			}
+
 			
 			$RequeteSQL="Update emplacement set id_type_support=\"$Type_CD\", numero_de_classement=\"$Numero_CD\", id_videotheque=3, proprio_video=\"$Proprio_CD\" where id_emplacement=$id_emplacement ;";
 			$Result=mysqli_query($db,$RequeteSQL);
 			if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-			mysqli_free_result($Result);
+			//else {mysqli_free_result($Result);}
 		}
 
 		$RequeteSQL="insert into est_enregistre  (id_emplacement, id_film) values ($id_emplacement, $id_film);";
 		$Result=mysqli_query($db,$RequeteSQL);
 		if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-		mysqli_free_result($Result);
+		//else {mysqli_free_result($Result);}
 
 
 	}
@@ -583,9 +654,13 @@ echo "gestion 4";
 		$RequeteSQL="select count(*) as compte from emplacement where id_videotheque=4 and numero_de_classement=\"$Numero_Book\" ";
 		$Result=mysqli_query($db,$RequeteSQL);
 		if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-		$Fiche = mysqli_fetch_assoc($Result);
-		$compte=$Fiche['compte'];
-		mysqli_free_result($Result);
+		else
+		{
+			$Fiche = mysqli_fetch_assoc($Result);
+			$compte=$Fiche['compte'];
+			mysqli_free_result($Result);			
+		}
+
 echo $compte."BOOK1".$RequeteSQL;
 		if ($compte==0)  
 		{
@@ -593,14 +668,18 @@ echo $compte."BOOK1".$RequeteSQL;
 			$RequeteSQL .= " VALUES ('', \"$Type_Book\", \"$Numero_Book\", 4, \"$Proprio_Book\"  ) ;";
 			$Result=mysqli_query($db,$RequeteSQL);
 			if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-			mysqli_free_result($Result);
+			//else {mysqli_free_result($Result);}
 			
 			$RequeteSQL="select  LAST_INSERT_ID() as last;";
 			$Result=mysqli_query($db,$RequeteSQL);
 			if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-			$Fiche = mysqli_fetch_assoc($Result);
-			$id_emplacement=$Fiche['last'];
-			mysqli_free_result($Result);
+			else
+			{
+				$Fiche = mysqli_fetch_assoc($Result);
+				$id_emplacement=$Fiche['last'];
+				mysqli_free_result($Result);				
+			}
+
 echo "BOOK2".$RequeteSQL;
 		}
 		else
@@ -608,21 +687,25 @@ echo "BOOK2".$RequeteSQL;
 			$RequeteSQL="select * from emplacement where id_videotheque=4 and numero_de_classement=\"$Numero_Book\" ";
 			$Result=mysqli_query($db,$RequeteSQL);
 			if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }  
-			$Fiche = mysqli_fetch_assoc($Result);
-			$id_emplacement=$Fiche['id_emplacement'];
-			mysqli_free_result($Result);
+			else
+			{
+				$Fiche = mysqli_fetch_assoc($Result);
+				$id_emplacement=$Fiche['id_emplacement'];
+				mysqli_free_result($Result);				
+			}
+
 			
 			$RequeteSQL="Update emplacement set id_type_support=\"$Type_Book\", numero_de_classement=\"$Numero_Book\", id_videotheque=4, proprio_video=\"$Proprio_Book\" where id_emplacement=$id_emplacement ;";
 			$Result=mysqli_query($db,$RequeteSQL);
 			if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-			mysqli_free_result($Result);
+			//else {mysqli_free_result($Result);}
 echo "BOOK3.$RequeteSQL";
 		}
 
 		$RequeteSQL="insert into est_enregistre  (id_emplacement, id_film) values ($id_emplacement, $id_film);";
 		$Result=mysqli_query($db,$RequeteSQL);
 		if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-		mysqli_free_result($Result);
+		//else {mysqli_free_result($Result);}
 
 echo "BOOK4.$RequeteSQL";
 	}
@@ -632,8 +715,12 @@ echo "BOOK4.$RequeteSQL";
 	$RequeteSQL="select distinct * from movie m, emplacement e, est_enregistre er, est_du_genre eg, genre g, type_support t where  m.id_film=er.id_film and m.id_film=eg.id_film and g.id_genre=eg.id_genre and t.id_type_support=e.id_type_support and e.id_emplacement=er.id_emplacement order by m.id_film";
 	$Result=mysqli_query($db,$RequeteSQL);
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	$Compte= mysqli_num_rows($Result) ;
-	mysqli_free_result($Result);
+	else
+	{
+		$Compte= mysqli_num_rows($Result) ;
+		// mysqli_free_result($Result);		// ne pas mettre sinon pas de resultat dans la partie html
+	}
+
 
 } // fin gestion des modifs
 
@@ -653,8 +740,12 @@ $RequeteSQL.=" order by $Ord";
 
 $Result=mysqli_query($db,$RequeteSQL);
  if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-$Compte= mysqli_num_rows($Result) ;
-//mysqli_free_result($Result);
+ else
+ {
+	$Compte= mysqli_num_rows($Result) ;
+	//mysqli_free_result($Result); sinon pas de result dans le html
+ }
+
 }
 
 //########### SELECTION ###################
@@ -699,8 +790,12 @@ echo "<b>$RequeteSQL</b>";
 
 	$Result=mysqli_query($db,$RequeteSQL);
 	if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
-	$Compte= mysqli_num_rows($Result) ;
-	//mysqli_free_result($Result);
+	
+	else 
+	{
+		$Compte= mysqli_num_rows($Result) ;
+		//mysqli_free_result($Result); // ne pas mettre ici on s'en sert plus loin
+	}
  
 }
 
@@ -884,6 +979,7 @@ return confirm("Etes-vous sur de vouloir supprimer ?");
 						echo "<td><p>$Image</p></td>";
 						echo "</tr>\n";
  					}
+					mysqli_free_result($Result);
  					fermer_base ($db);
 
  				?>

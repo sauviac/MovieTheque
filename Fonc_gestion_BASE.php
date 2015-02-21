@@ -13,7 +13,6 @@ function trouver_liste_place_libre($db,$videotheque)
 
 
  $RequeteSQL="select max(numero_de_classement) as max_val FROM emplacement where id_videotheque=$videotheque "; 
- echo $RequeteSQL;
  $Result=mysqli_query($db,$RequeteSQL);   
  $Sortie="";   
  
@@ -59,7 +58,7 @@ $Return_var[$compte_libre+1]=$Sortie;
   return $Return_var ;
 }
 
-
+// ============================================================ //
 function liste_genre($db)
 {
 // Cette fonction crée la liste des genres disponibles
@@ -82,6 +81,8 @@ if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
   return $Sortie;
 }
 
+
+// ============================================================ //
 function liste_pays($db)
 {
 // Cette fonction crée la liste des genres disponibles
@@ -102,6 +103,7 @@ if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
   return $Sortie;
 }
 
+// ============================================================ //
 function liste_rangement($db)
 {
 // Cette fonction crée la liste des rangements dispo
@@ -123,7 +125,8 @@ if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
  mysqli_free_result($Result);
   return $Sortie;
 }
-
+// ============================================================ //
+// ============================================================ //
 function liste_support_Book($db)
 {
 // creation de la liste des type de support video : les chs, les dvd, les cd, ...  
@@ -146,8 +149,8 @@ if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
  mysqli_free_result($Result);
   return $Sortie;
 }
-
-
+// ============================================================ //
+// ============================================================ //
 function liste_support_VHS($db)
 {
 // creation de la liste des type de VHS  
@@ -172,6 +175,8 @@ if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
   return $Sortie;
 }
 
+// ============================================================ //
+// ============================================================ //
 function liste_support_DVD($db)
 {
 // creation de la liste des type de DVD  
@@ -196,6 +201,8 @@ if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
   mysqli_free_result($Result);
   return $Sortie;
 }
+// ============================================================ //
+// ============================================================ //
 function liste_support_CD($db)
 {
 // creation de la liste des type de CD  

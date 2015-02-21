@@ -9,14 +9,15 @@ $places_DVD=trouver_liste_place_libre($db,2);
 $places_CD=trouver_liste_place_libre($db,3);
 $places_Book=trouver_liste_place_libre($db,4);
 
-//Old version
-$liste_support_VHS=liste_support_VHS();
-$liste_support_DVD=liste_support_DVD();
-$liste_support_CD=liste_support_CD();
-$liste_support_Book=liste_support_Book();
+//Old version -> New version il faut passer la $db pour 
+// la nouvelle version mysqli qui a besoin de l'argument database
+$liste_support_VHS=liste_support_VHS($db);
+$liste_support_DVD=liste_support_DVD($db);
+$liste_support_CD=liste_support_CD($db);
+$liste_support_Book=liste_support_Book($db);
 
-$liste_des_pays = liste_pays();
-$liste_des_genres = liste_genre() ;
+$liste_des_pays = liste_pays($db);
+$liste_des_genres = liste_genre($db) ;
 
 fermer_base ($db);
 
@@ -211,7 +212,7 @@ function selectBook_OFF()
 </head>
 
 	<body bgcolor="#ffffff">
-		<h1>Vid&eacute;oth&egrave;que : <font color="blue">Nouvelle fiche</font></h1>
+		<h1>Vid&eacute;oth&egrave;que : <font color="blue">Nouvelle Ie</font></h1>
 		<hr>
 		<table width="596" border="0" cellspacing="5" cellpadding="0">
 			<tr>

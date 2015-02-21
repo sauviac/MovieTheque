@@ -4,29 +4,30 @@ require_once("./Fonc_gestion_BASE.php");
 $db= ouvrir_base ();
 
 // RECUP DES PLACES LIBRES //
-$places_VHS=trouver_liste_place_libre(1);
-$places_DVD=trouver_liste_place_libre(2);
-$places_CD=trouver_liste_place_libre(3);
-$places_Book=trouver_liste_place_libre(4);
+$places_VHS=trouver_liste_place_libre($db,1);
+$places_DVD=trouver_liste_place_libre($db,2);
+$places_CD=trouver_liste_place_libre($db,3);
+$places_Book=trouver_liste_place_libre($db,4);
 
-//Old version
-$liste_support_VHS=liste_support_VHS();
-$liste_support_DVD=liste_support_DVD();
-$liste_support_CD=liste_support_CD();
-$liste_support_Book=liste_support_Book();
+//Old version -> New version il faut passer la $db pour 
+// la nouvelle version mysqli qui a besoin de l'argument database
+$liste_support_VHS=liste_support_VHS($db);
+$liste_support_DVD=liste_support_DVD($db);
+$liste_support_CD=liste_support_CD($db);
+$liste_support_Book=liste_support_Book($db);
 
-$liste_des_pays = liste_pays();
-$liste_des_genres = liste_genre() ;
+$liste_des_pays = liste_pays($db);
+$liste_des_genres = liste_genre($db) ;;
 
 $id=$_REQUEST['id'];
 
 // RECUP des infos MOVIE
 $RequeteSQLfilm="select distinct * from movie m where m.id_film=$id";
 $RequeteSQL=$RequeteSQLfilm ;
-$Result=mysql_query($RequeteSQL);
+$Result=mysqli_query($db,$RequeteSQL);
 if (!$Result) { die('Invalid query: ' . mysql_error()); }
 
-	$Fiche = mysql_fetch_array($Result, MYSQL_ASSOC);
+	$Fiche = mysqli_fetch_assoc($Result);
 	$Titre=$Fiche['titre'];
 	$Realisateur=$Fiche['realisateur'];
 	$Annee=$Fiche['annee'];
@@ -39,12 +40,12 @@ if (!$Result) { die('Invalid query: ' . mysql_error()); }
 	$RequeteSQLpays="select distinct * from pays p, est_produit_par_un_pays ep where p.id_pays=ep.id_pays ";
 	$RequeteSQL=$RequeteSQLpays ;
 	$RequeteSQL.=" and id_film=$id";
-   $Result=mysql_query($RequeteSQL);
+   $Result=mysqli_query($db,$RequeteSQL);
    if (!$Result) { die('Invalid query: ' . mysql_error()); }
 
 	$nb_pays=0;
 	$Chaine_pays="";
-	while ( $Fiche = mysql_fetch_array($Result, MYSQL_ASSOC) ) 
+	while ( $Fiche = mysqli_fetch_assoc($Result) ) 
 	{  
 		$nb_pays++ ; $Pays=$Fiche['pays']; $id_pays=$Fiche['id_pays'];
 		$Chaine_pays.="<option value=\"$id_pays\" selected >$Pays</option>"; 
@@ -54,12 +55,12 @@ if (!$Result) { die('Invalid query: ' . mysql_error()); }
 	$RequeteSQLgenre="select distinct * from est_du_genre eg, genre g where g.id_genre=eg.id_genre " ;
 	$RequeteSQL=$RequeteSQLgenre;
 	$RequeteSQL.=" and id_film=$id ";
-	$Result=mysql_query($RequeteSQL);
+	$Result=mysqli_query($db,$RequeteSQL);
 	if (!$Result) { die('Invalid query: ' . mysql_error()); }
 
 	$nb_genre=0;
 	$Chaine_genre="";
-	while ( $Fiche = mysql_fetch_array($Result, MYSQL_ASSOC) ) 
+	while ( $Fiche = mysqli_fetch_assoc($Result) ) 
 	{  
 		$nb_genre++ ; $Genre=$Fiche['genre']; $id_genre=$Fiche['id_genre'];
 		$Chaine_genre.="<option value=\"$id_genre\" selected >$Genre</option>"; 
@@ -69,7 +70,7 @@ if (!$Result) { die('Invalid query: ' . mysql_error()); }
 	$RequeteSQLnumero="select distinct * from emplacement e, est_enregistre er, type_support t, videotheque v where t.id_type_support=e.id_type_support and e.id_emplacement=er.id_emplacement and e.id_videotheque=v.id_videotheque " ;
 	$RequeteSQL=$RequeteSQLnumero;
 	$RequeteSQL.=" and id_film=$id";
-	$Result=mysql_query($RequeteSQL);
+	$Result=mysqli_query($db,$RequeteSQL);
 	if (!$Result) { die('Invalid query: ' . mysql_error()); }
 
 	$nb_VHS=0;
@@ -81,7 +82,7 @@ if (!$Result) { die('Invalid query: ' . mysql_error()); }
 	$le_proprio_CD="";	$proprio_CD="";		$option_CD="";	$Numero_CD=""; 	$id_type_CD=""; 	$Type_CD=""; 	$CD="";		$CD_state="disabled";
 	$le_proprio_Book="";$proprio_Book="";	$option_Book="";$Numero_Book="";$id_type_Book=""; 	$Type_Book=""; 	$Book="";	$Book_state="disabled";
 
-	while ( $Fiche = mysql_fetch_array($Result, MYSQL_ASSOC) ) 
+	while ( $Fiche = mysqli_fetch_assoc($Result) ) 
 	{
 		$videotheque=$Fiche['id_videotheque'];
 		echo $videotheque;

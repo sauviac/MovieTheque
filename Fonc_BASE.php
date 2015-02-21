@@ -6,7 +6,7 @@ function ouvrir_base ()
        $host="localhost"; //Nom de l'hôte mysql
 //       $host="ist-pilat.univ-st-etienne.fr"; //Nom de l'hôte mysql
        
-       $db="video"; //Nom de botre base de données
+       $db="video_test"; //Nom de botre base de données
 	
 	$user="root"; //Nom d'utilisateur de la base de données
 	$pw=""; //Mot de passe de votre base

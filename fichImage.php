@@ -18,8 +18,8 @@ if (isset($_FILES['Image']['name'] ))
 			
 echo $LOC; $NomImage;
 // Recherche du last_insert_id de la table
-	$REQ_ID=mysql_query("select max(id_film) from $table");
-	$RES_ID=mysql_fetch_array($REQ_ID, MYSQL_ASSOC);
+	$REQ_ID=mysqli_query($db, "select max(id_film) from $table");
+	$RES_ID=mysqli_fetch_array($REQ_ID, MYSQL_ASSOC);
 	$NEXT_ID=$RES_ID['max(id_film)']+1;
 		
 
@@ -47,11 +47,11 @@ else
 
 	// on se trouve dans le cas de la modification, on peut donc vouloir ecraser le fichier precedent par une nouvelle version.
 	// On recupere dans la base de donnees l'ancien nom de fichier
-		   $RES3=mysql_query("select image from $table where id_film=$id_film");
+		   $RES3=mysqli_query($db, "select image from $table where id_film=$id_film");
 	   
-		   if (!$RES3) { die('Invalid query: ' . mysql_error()); } // si probleme de requete on arrete tout
+		   if (!$RES3) { die('Invalid query: ' . mysqli_error($db)); } // si probleme de requete on arrete tout
 		   else 	{
-		   			$LIG=mysql_fetch_array($RES3, MYSQL_ASSOC);
+		   			$LIG=mysqli_fetch_assoc($RES3);
        				$NomFichierAncien=$LIG['image'];
        				// echo "<br>ancien nom fichier = ".$NomFichierAncien ."<br>";
        				
