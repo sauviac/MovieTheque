@@ -1,5 +1,5 @@
 <?php 
-require_once("./Fonc_Base.php");
+require_once("./Fonc_BASE.php");
 include("./RedimPict.php");
 $db= ouvrir_base ();
 $id= $_REQUEST['id'];

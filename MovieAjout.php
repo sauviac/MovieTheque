@@ -1,5 +1,5 @@
 <?php 
-require_once("./Fonc_Base.php");
+require_once("./Fonc_BASE.php");
 require_once("./Fonc_gestion_BASE.php");
 $db=ouvrir_base ();
 
