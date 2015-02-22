@@ -1,5 +1,13 @@
 <?php 
-require_once("./Fonc_Base.php");
+fopen( __DIR__."/myerror.log" , "w") ;
+define('ERROR_LOG_FILE', 'myerror.log');
+define('ERROR_LOG_ALL', true);
+error_reporting(-1);	// reporte toutes les erreurs php
+
+require_once("./Fonc_BASE.php");
+//define('ERROR_LOG_FILE', './myerror.log');
+print_r( "BONJOUR !" );
+
 $db= ouvrir_base ();
 
 echo $_REQUEST['Origine'];
