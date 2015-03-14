@@ -785,7 +785,8 @@ $RequeteSQL="select distinct * from movie m, emplacement e, est_enregistre er, e
 	if (isset ($_REQUEST['Ordre']) ) 
 	{ $Ord = $_REQUEST['Ordre'] ;}
 	else
-	{ $Ord="m.titre"; }
+	{ $Ord="m.titre"; 
+		$Ord="e.id_emplacement";}
 	
 	
 	if ($Suite==0) 

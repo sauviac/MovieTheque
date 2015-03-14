@@ -85,6 +85,8 @@ $Support="";
 mysqli_free_result($Result);
 
  // preaa des id suivants et precedents
+
+ 
 $Res=mysqli_query($db,"select id_film from $table where id_film >=$id Limit 2 "); 
  if (!$Res) { die('Invalid query: ' . mysqli_error($db)); }
 $R=mysqli_fetch_assoc($Res) ;
@@ -100,6 +102,15 @@ $R=mysqli_fetch_assoc($Res) ;
 //echo $R['c']; echo "PREV";
 $IdPrev=$R['id_film'];
 mysqli_free_result($Res);
+
+$Res=mysqli_query($db,"select max(id_film) as lemax, min(id_film) as lemin from $table "); 
+ if (!$Res) { die('Invalid query: ' . mysqli_error($db)); }
+$R=mysqli_fetch_assoc($Res) ;
+$IdMax=$R['lemax'];
+$IdMin=$R['lemin'];
+mysqli_free_result($Res);
+if ($id==$IdMax)  {$IdNext=1;}
+if ($id==$IdMin)  {$IdPrev=$IdMax;}
 
 fermer_base ($db);
 

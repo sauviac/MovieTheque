@@ -12,10 +12,17 @@ function ouvrir_base ()
 	}
 	else
 	{	
-	$host="sql2.olympe.in"; //Nom de l'hôte mysql     
-    $db="bqt9rm0v"; //Nom de botre base de données
-	$user="bqt9rm0v"; //Nom d'utilisateur de la base de données
-	$pw="video071466"; //Mot de passe de votre base
+	//$host="sql2.olympe.in"; //Nom de l'hôte mysql     
+    //$db="bqt9rm0v"; //Nom de botre base de données
+	//$user="bqt9rm0v"; //Nom d'utilisateur de la base de données
+	//$pw="video071466"; //Mot de passe de votre base
+	
+	$host="mysql.legtux.org"; //Nom de l'hôte mysql   
+$host="localhost"; //Nom de l'hôte mysql 	
+    $db="videobs"; //Nom de botre base de données
+	$user="videobs"; //Nom d'utilisateur de la base de données
+	$pw="LegTux071466"; //Mot de passe de votre base
+
 	}
 	
 
