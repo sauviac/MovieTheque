@@ -17,112 +17,94 @@ fermer_base ($db);
 
 <html>
 
-	<head>
-		<meta name="generator" content="Adobe GoLive 6">
-		<title>Vid&eacute;oth&egrave;que</title>
-		<meta http-equiv="content-type" content="text/html;; charset=iso-8859-1">
-		<link href="main.css" rel="stylesheet" media="screen">
-		<script type="text/javascript"><!--
-function ValidClick()
-{
-return confirm("Etes-vous sur de vouloir supprimer ?");
-}
-// -->
-</script>
-	</head>
+	<?php
+		include('entete.html');
+	?>
 
 	<body bgcolor="#ffffff">
-		<h1>Vid&eacute;oth&egrave;que : <font color="blue">S&eacute;l&eacute;ction fiche</font></h1>
-		<hr>
-		<table width="318" border="0" cellspacing="5" cellpadding="0">
-			<tr>
-				<td valign="middle">
-					<div align="center">
-						<a href="/Movietheque/MovieAjout.php">Ajouter une fiche</a></div>
-			  </td>
-				<td valign="bottom" width="20"></td>
-				<td valign="middle">
-					<div align="center">
-						<a href="index.html">Retour accueil</a></div>
-				</td>
-			</tr>
-		</table>
-		<div align="center">
-			<hr>
-			<form action="MovieListe.php" method="get" name="Selection" enctype="multipart/form-data">
-		  <div align="left">
-					<input type="hidden" name="Origine" value="Selection">
-					<table width="469" border="0" cellspacing="4" cellpadding="0" bgcolor="#f5f5dc">
-						<tr>
-							<td width="152">
-								<p>Titre ou mot du titre</p>							</td>
-							<td>
-								<p><input type="text" name="Titre" size="47"></p>							</td>
-						</tr>
-						<tr>
-							<td width="152">
-								<p>R&eacute;alisateur</p>							</td>
-							<td>
-								<p><input type="text" name="Realisateur" size="47"></p>							</td>
-						</tr>
-						<tr>
-							<td width="152">
-								<p>Ann&eacute;e</p>							</td>
-							<td><input type="text" name="Annee" size="4"></td>
-						</tr>
-						<tr>
-							<td width="152">
-								<p>Genre</p>							</td>
-							<td>
-								<p><select name="Genre" size="1">
-									<option value="" selected>Tout</option>
-									<?php echo $liste_des_genres ;?>
-									</select></p>							</td>
-						</tr>
-						<tr>
-							<td width="152">
-								<p>Dur&eacute;e MAX (en minutes)</p>							</td>
-							<td>
-								<p><input type="text" name="Duree" size="4"></p>							</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<p>								</p>							</td>
-						</tr>
-						<tr>
-							<td width="152">
-								<p>Titre original</p>							</td>
-							<td>
-								<p><input type="text" name="Title" size="41"></p>							</td>
-						</tr>
-						<tr>
-							<td width="152">
-								<p>Support d'enregistrement</p>							</td>
-							<td><select name="Support" size="1">
+
+		<?php
+		include('navigationConsult.html');
+		?>
+	
+		<div class="container-fluid">
+
+
+		
+			
+		<form class="form-horizontal" action="MovieConsult.php" method="get" name="Selection" enctype="multipart/form-data">
+		
+		  			<input type="hidden" name="Origine" value="Selection">
+					 <div class="form-group">
+						<label for="Titre" class="col-sm-2 control-label">Titre ou mot du titre</label>
+						<div class="col-sm-10">
+						<input type="text" class="form-control"  name="Titre" id="Titre" placeholder="Entrez Titre">
+						</div>
+					</div>					
+					<div class="form-group">
+						<label for="Realisateur" class="col-sm-2 control-label">R&eacute;alisateur</label>
+						<div class="col-sm-10">
+						<input type="text" class="form-control" name="Realisateur" id="Realisateur" placeholder="Entrez Realisateur">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="Annee" class="col-sm-2 control-label">Ann&eacute;e</label>
+						<div class="col-sm-10">
+						<input type="text" class="form-control" name="Annee" id="Annee" placeholder="Entrez Annee de sortie">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="Genre" class="col-sm-2 control-label">Genre</label>
+						<div class="col-sm-10">
+						<p><select name="Genre" id="Genre" size="1" class="form-control" >
+							<option value="" selected>Tout</option>
+							<?php echo $liste_des_genres ;?>
+							</select>
+						</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="Annee" class="col-sm-2 control-label">Ann&eacute;e</label>
+						<div class="col-sm-10">
+						<input type="text" class="form-control" name="Annee" id="Annee" placeholder="Entrez Annee de sortie">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="Duree" class="col-sm-2 control-label">Dur&eacute;e MAX (en minutes)</label>
+						<div class="col-sm-10">
+						<input type="text" class="form-control" name="Duree" id="Duree" placeholder="Entrez Duree de sortie">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="Title" class="col-sm-2 control-label">Titre original</label>
+						<div class="col-sm-10">
+						<input type="text" class="form-control" name="Title" id="Title" placeholder="Entrez Titre original">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="Support" class="col-sm-2 control-label">Support d'enregistrement</label>
+						<div class="col-sm-10">
+						<p><select name="Support" size="1" class="form-control" >
 							  <option value="2">DVD</option>
 							  <option value="3">CD DivX</option>
 							  <option value="4">Classeurs</option>
 							  <option value="1">VHS</option>
 							  <option value="" selected>Tout</option>
-								</select></td>
-						</tr>
-						<tr height="6">
-							<td width="152" height="6"></td>
-							<td height="6"></td>
-						</tr>
-						<tr>
-							<td width="152"><input type="submit" name="submitButtonName"></td>
-							<td><input type="reset"></td>
-						</tr>
-					</table>
-			  </div>
+							</select>
+						</p>
+						</div>
+					</div>
+					<div class="form-group">	
+						<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-primary">Envoyer</button>
+						<button type="reset" class="btn btn-warning">Annuler</button>
+						</div>
+					</div>
+
 			</form>
 		  <p></p>
-		</div>
-		<div align="left">
-			<p></p>
-			<p></p>
-		</div>
+		
+	</div>
 	</body>
 
 </html>
