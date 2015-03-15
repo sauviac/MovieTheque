@@ -64,22 +64,22 @@ $Support="";
 	if ($videotheque==1) {
 	$nb_VHS++;	$Numero_VHS=$Fiche['numero_de_classement'] ;
 	$Type_VHS=$Fiche['capacite_support'] ; $Proprio_VHS=$Fiche['proprio_video'] ; 
-	$Support.="</br>&nbsp;-&nbsp;VHS $Type_VHS (n°$Numero_VHS)" ;}
+	$Support.="</br>&nbsp;&nbsp;VHS $Type_VHS (n&deg;$Numero_VHS)" ;}
 
 	if ($videotheque==2) {
 	$nb_DVD++; $Numero_DVD=$Fiche['numero_de_classement']; 
 	$Type_DVD=$Fiche['capacite_support'] ; $Proprio_DVD=$Fiche['proprio_video']; 
-	$Support.="</br>&nbsp;-&nbsp;DVD $Type_DVD (n°$Numero_DVD)";}
+	$Support.="</br>&nbsp;&nbsp;DVD $Type_DVD (n&deg;$Numero_DVD)";}
 
 	if ($videotheque==3) {
 	$nb_CD++; $Numero_CD=$Fiche['numero_de_classement']; 
 	$Type_CD=$Fiche['capacite_support'] ;  $Proprio_CD=$Fiche['proprio_video']; 
-	$Support.="</br>&nbsp;-&nbsp;CD $Type_CD (n°$Numero_CD)";}
+	$Support.="</br>&nbsp;&nbsp;CD $Type_CD (n&deg;$Numero_CD)";}
 	
 	if ($videotheque==4) {
 	$nb_DVDBook++; $Numero_DVDBook=$Fiche['numero_de_classement']; 
 	$Type_DVDBook=$Fiche['capacite_support'] ;  $Proprio_DVDBook=$Fiche['proprio_video']; 
-	$Support.="</br>&nbsp;-&nbsp;DVDBook $Type_DVDBook (n°$Numero_DVDBook)";}
+	$Support.="</br>&nbsp;&nbsp;DVDBook $Type_DVDBook (n&deg;$Numero_DVDBook)";}
 
 }
 mysqli_free_result($Result);
@@ -127,46 +127,60 @@ $Hauteur=$x['Hauteur'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
-<html>
+<html lang="fr">
 
-	<head>
-		<meta name="generator" content="Adobe GoLive 6">
-		<title>Cartoonoth&egrave;que</title>
-		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
-		<link href="main.css" rel="stylesheet" media="screen">
-		<script type="text/javascript"><!--
-function ValidClick()
-{
-return confirm("Etes-vous sur de vouloir supprimer ?");
-}
-// -->
-</script>
-	</head>
+	<?php
+		include('entete.html');
+	?>
 
 	<body bgcolor="#ffffff">
-		<h1>Vid&eacute;oth&egrave;que : <font color="blue"> fiche</font></h1>
-		<hr>
-		<table width="742" border="0" cellspacing="5" cellpadding="0">
-			<tr>
-				<td valign="middle" width="175">
-					<div align="center">
-						<p><a href="MovieListe.php?Origine=Accueil#<?php echo $id;?> ">Liste des films</a></p>
+
+		<?php
+		include('navigationConsult.html');
+		?>
+		<div class="container-fluid">
+			<div class="row">
+			<div class="col-xs-12">
+			<table class="table">
+				<tbody>
+					<tr>
+					<td >
+                    <?php if($Mypic==1) {echo "<a href=\"./Illustrations/$Image\" ><img  class=\"img-responsive\" style src=\"./Illustrations/$Image\"   ></a>";} ?>
+                    </td>
+					<td>
+					<div class="col-xs-12">
+						<div class="panel panel-info">
+						<div class="panel-heading" ><h3><class="panel-title"><?php echo utf8_encode($Titre);?></h3></div>
+						<div class="panel-footer">
+											<h6>
+							<class="panel-body">
+								<i>[<?php echo utf8_encode($Title);?>]<br></i>
+								<br>Realisateur : <?php echo utf8_encode($Realisateur);?>
+								<br>Origine : <?php echo utf8_encode($Pays);?>
+								<br>Genre : <?php echo utf8_encode($Genre);?>
+								<br>Annee : <?php echo utf8_encode($Annee);?>
+						</h6>
+						</div>
+						<div class="panel-body">
+						<p><?php echo utf8_encode($LeResu);?></p>
+
+						</div>
+						
+						<div class="panel-footer"><h6>
+						Dur&eacute;e :<?php echo "$Duree mn"; 
+																	echo "<br/>";
+																	echo "Support : $Support";
+																	echo "<br/>"; ?></font>
+						</h6></div>
+						</div>
+
 					</div>
-				</td>
-				<td valign="bottom" width="20"></td>
-				<td valign="middle" width="200">
-					<div align="center">
-						<a href="index.html">Retour accueil</a></div>
-				</td>
-				<td valign="middle" width="30"></td>
-				<td valign="middle" width="30"><p><a href="MovieModif.php?id=<?php echo $id; ?>"><img src="Web_image/Crayon.jpg" alt="" height="23" width="20" border="0"></a></p></td>
-				<td valign="middle" width="30"></td>
-				<td valign="middle" width="30"><a onClick="return ValidClick()" href="MovieListe.php?Origine=Suppr&id=<?php echo $id;?>"><img src="Web_image/trash.gif" alt="" height="20" width="21" border="0"></a></td>
-			</tr>
-		</table>
-		<div align="center">
-			<hr>
-		</div>
+					
+				</tbody>
+			</table>
+			</div>
+        </div>
+		
 		<div align="left">
 			<table width="483" border="0" cellspacing="5" cellpadding="0">
 				<tr>
@@ -181,55 +195,10 @@ return confirm("Etes-vous sur de vouloir supprimer ?");
 						</table>
 					</td>
 				</tr>
-				<tr>
-					<td rowspan="10" valign="top" width="180">
-                    <noedit>
-					<?php if($Mypic==1) {echo "<a href=\"./Illustrations/$Image\" ><img src=\"./Illustrations/$Image\" height= \"$Hauteur\" width=\"$Largeur\"  border=\"0\"></a>";} ?></noedit>
-                    </td>
-					<td>
-						<h3><noedit><?php echo $Titre;?></noedit></h3>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<div align="left">
-							<i><font id="auteur" color="#d8bfd8">[<noedit><?php echo $Title;?></noedit>]</font></i></div>
-					</td>
-				</tr>
-				<tr>
-				<td><noedit><font id="auteur" color="#d8bfd8">Realisateur : <?php echo $Realisateur;?></font></noedit></td>
-			</tr>
-				<tr>
-				<td><noedit><font id="auteur" color="#d8bfd8">Origine : <?php echo $Pays;?>
-                <br>Genre : <?php echo $Genre;?>
-                <br>Annee : <?php echo $Annee;?>
-                </font></noedit></td>
-			</tr>
-				<tr>
-				<td><noedit><p><?php echo $LeResu;?></p></noedit></td>
-			</tr>
-				<tr>
-				<td><noedit><font id="auteur" color="#d8bfd8"><br/>Dur&eacute;e :<?php echo "$Duree mn"; 
-																	echo "<br/>";
-																	echo "Support : $Support";
-																	echo "<br/>"; ?></font></noedit></td>
-			</tr>
-				<tr>
-				<td></td>
-			</tr>
-				<tr>
-				<td></td>
-			</tr>
-				<tr>
-				<td></td>
-			</tr>
-				<tr>
-				<td></td>
-			</tr>
+				
 			</table>
 		</div>
-		<div align="left">
-			<p></p>
+
 		</div>
 	</body>
 

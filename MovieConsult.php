@@ -118,7 +118,7 @@ $RequeteSQL="select distinct * from movie m, emplacement e, est_enregistre er, e
 						echo "<tr><td>$id</td>";
 						echo "<td >$Videotheque</td>";
 						echo "<td>$Numero</td>";
-						echo "<td>$Titre</td>";
+						echo "<td><a href=\"./MovieFiche.php?id=$id\">$Titre</a></td>";
 						echo "<td>$Genre</td>";
 						echo "<td>$Duree mn</td>";
 						echo "<td>$Realisateur</td>";
