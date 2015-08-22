@@ -73,7 +73,9 @@ if (!$Result) { die('Invalid query: ' . mysqli_error($db)); }
   
  while ( $Fiche = mysqli_fetch_assoc($Result) ) 
   {
-  $genre=utf8_encode($Fiche['genre']);
+  $genre=($Fiche['genre']);
+ //   $genre=utf8_encode($Fiche['genre']);
+
   $id=$Fiche['id_genre'];
      		$Sortie.="<option  value=\"$id\" >$genre</option>\n";
   }

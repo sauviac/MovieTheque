@@ -20,7 +20,12 @@
 							Bonjour et bienvenue dans la vid&eacute;oth&egrave;que familiale&nbsp;&nbsp;&nbsp;
 							<span class="label label-primary">VideoBS</span></h4>
 					</td></tr>
-					<tr><td><img class="img-responsive" style="width: 100%" src="Web_image/murdaffiches.jpg"></td></tr>
+							
+							<?php
+								include('MatriceImage.php');
+							?>
+							
+					
 				</tbody>
 			</table>
 			</div>

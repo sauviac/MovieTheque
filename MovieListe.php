@@ -39,6 +39,8 @@ if ( $_REQUEST['Origine']=="Ajout")
 	
 	$Duree=$_REQUEST['Duree'];
 	$Resume=$_REQUEST['Resume'];
+	 $texte= mysqli_real_escape_string( $db, $Resume ) ;  // mise en forme txt avec masquage des caract particuliers
+	 $Resume =$texte;
 	$Title=$_REQUEST['Title'];  // titre original
 	
 	if (isset($_REQUEST['VHS'])) {
@@ -385,6 +387,8 @@ print_r($_REQUEST);
 	
 	$Duree=$_REQUEST['Duree'];
 	$Resume=$_REQUEST['Resume'];
+	 $texte= mysqli_real_escape_string( $db, $Resume ) ;  // mise en forme txt avec masquage des caract particuliers
+	 $Resume = $texte;
 	$Title=$_REQUEST['Title'];  // titre original
 	
 	if (isset($_REQUEST['VHS'])) {
@@ -785,7 +789,7 @@ $RequeteSQL="select distinct * from movie m, emplacement e, est_enregistre er, e
 	if (isset ($_REQUEST['Ordre']) ) 
 	{ $Ord = $_REQUEST['Ordre'] ;}
 	else
-	{ $Ord="m.titre"; 
+	{ $Ord="m.id"; 
 		$Ord="e.id_emplacement";}
 	
 	

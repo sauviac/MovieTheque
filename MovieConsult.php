@@ -44,7 +44,7 @@ $RequeteSQL="select distinct * from movie m, emplacement e, est_enregistre er, e
 	{ $Ord = $_REQUEST['Ordre'] ;}
 	else
 	{ $Ord="m.titre"; 
-		$Ord="e.id_emplacement";}
+		$Ord="e.numero_de_classement";}
 	
 	
 	if ($Suite==0) 
@@ -100,15 +100,15 @@ $RequeteSQL="select distinct * from movie m, emplacement e, est_enregistre er, e
 					{ 
 					// Recup des données
 						$id=$Fiche['id_film'];
-						$Titre=utf8_encode($Fiche['titre']);
-						$Realisateur=utf8_encode($Fiche['realisateur']);
+						$Titre=($Fiche['titre']);
+						$Realisateur=($Fiche['realisateur']);
 						$Annee=$Fiche['annee'];
 						$Duree=$Fiche['duree'];
-						$Title=utf8_encode($Fiche['title']);
-						$Resume=utf8_encode($Fiche['resume']);
+						$Title=($Fiche['title']);
+						$Resume=($Fiche['resume']);
 						$LeResu=nl2br($Resume);
 						$Image=$Fiche['image'];
-						$Genre=utf8_encode($Fiche['genre']);
+						$Genre=($Fiche['genre']);
 						$Support=$Fiche['type_de_support'];
 						$Numero=$Fiche['numero_de_classement'];
 						$Proprio=$Fiche['proprio_video'];

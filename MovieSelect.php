@@ -29,33 +29,30 @@ fermer_base ($db);
 	
 		<div class="container-fluid">
 
-
-		
-			
-		<form class="form-horizontal" action="MovieConsult.php" method="get" name="Selection" enctype="multipart/form-data">
+		<form class="form-horizontal" action="MovieConsult.php" method="post" name="Selection" enctype="multipart/form-data">
 		
 		  			<input type="hidden" name="Origine" value="Selection">
 					 <div class="form-group">
 						<label for="Titre" class="col-sm-2 control-label">Titre ou mot du titre</label>
-						<div class="col-sm-10">
+						<div class="col-xs-6">
 						<input type="text" class="form-control"  name="Titre" id="Titre" placeholder="Entrez Titre">
 						</div>
 					</div>					
 					<div class="form-group">
 						<label for="Realisateur" class="col-sm-2 control-label">R&eacute;alisateur</label>
-						<div class="col-sm-10">
+						<div class="col-xs-6">
 						<input type="text" class="form-control" name="Realisateur" id="Realisateur" placeholder="Entrez Realisateur">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="Annee" class="col-sm-2 control-label">Ann&eacute;e</label>
-						<div class="col-sm-10">
+						<div class="col-xs-6">
 						<input type="text" class="form-control" name="Annee" id="Annee" placeholder="Entrez Annee de sortie">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="Genre" class="col-sm-2 control-label">Genre</label>
-						<div class="col-sm-10">
+						<div class="col-xs-6">
 						<p><select name="Genre" id="Genre" size="1" class="form-control" >
 							<option value="" selected>Tout</option>
 							<?php echo $liste_des_genres ;?>
@@ -65,25 +62,25 @@ fermer_base ($db);
 					</div>
 					<div class="form-group">
 						<label for="Annee" class="col-sm-2 control-label">Ann&eacute;e</label>
-						<div class="col-sm-10">
+						<div class="col-xs-6">
 						<input type="text" class="form-control" name="Annee" id="Annee" placeholder="Entrez Annee de sortie">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="Duree" class="col-sm-2 control-label">Dur&eacute;e MAX (en minutes)</label>
-						<div class="col-sm-10">
+						<div class="col-xs-6">
 						<input type="text" class="form-control" name="Duree" id="Duree" placeholder="Entrez Duree de sortie">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="Title" class="col-sm-2 control-label">Titre original</label>
-						<div class="col-sm-10">
+						<div class="col-xs-6">
 						<input type="text" class="form-control" name="Title" id="Title" placeholder="Entrez Titre original">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="Support" class="col-sm-2 control-label">Support d'enregistrement</label>
-						<div class="col-sm-10">
+						<div class="col-xs-6">
 						<p><select name="Support" size="1" class="form-control" >
 							  <option value="2">DVD</option>
 							  <option value="3">CD DivX</option>
